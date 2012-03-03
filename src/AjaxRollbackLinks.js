@@ -4,7 +4,7 @@
  * @author: [[meta:User:Krinkle]]
  * @author: [[User:Helder.wiki]]
  * @source: Based on [[meta:User:Krinkle/Scripts/AjaxPatrolLinks.js]] and [[w:en:User:Gracenotes/rollback.js]]
- * @traking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AjaxRollbackLinks.js]] ([[File:User:Helder.wiki/Tools/AjaxRollbackLinks.js]])
+ * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AjaxRollbackLinks.js]] ([[File:User:Helder.wiki/Tools/AjaxRollbackLinks.js]])
  * FIXME: Use MediaWiki API
  */
 function ajaxRollback() {
