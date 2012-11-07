@@ -1,4 +1,5 @@
-/* Makes [rollback] links for edits excecute without an additional page load. Including self-closing bookmarklet option.
+/**
+ * Makes [rollback] links for edits excecute without an additional page load. Including self-closing bookmarklet option.
  * @see: [[bugzilla:31270]]
  * @author: [[w:en:User:Gracenotes]]
  * @author: [[meta:User:Krinkle]]
@@ -7,28 +8,35 @@
  * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AjaxRollbackLinks.js]] ([[File:User:Helder.wiki/Tools/AjaxRollbackLinks.js]])
  * FIXME: Use MediaWiki API
  */
+/*jslint browser: true, white: true, devel: true, regexp: true */
+/*global mediaWiki, jQuery, injectSpinner */
+( function ( $ ) {
+'use strict';
+
 function ajaxRollback() {
 	var	$rollbackLinks = $('.mw-rollback-link a'),
 		prevUser,
-		rollbackSummaryDefault;
-	function useAJAX(e) {
-		e.preventDefault();
-		var $this = $(this);
-		var href = $this.attr( 'href' ) + '&bot=1';
-		$this.text('Rolling back...');
-		$rollbackLinks = $this.parent();
-		$.get(
-			href,
-			null,
-			function( data, status, request ) {
-				if ( status == 'success' ) {
-					$this.html('<span style="color:green">Rolled back</span>');
-				} else {
-					$this.html('<span style="color:red">Rollback failed</span>');// MediaWiki:Rollbackfailed
+		rollbackSummaryDefault,
+		useAJAX = function(e) {
+			e.preventDefault();
+			var $this = $(this),
+				href = $this.attr( 'href' ) + '&bot=1';
+			$this.text('Rolling back...');
+			$rollbackLinks = $this.parent();
+			/*jslint unparam: true*/
+			$.get(
+				href,
+				null,
+				function( data, status/*, request*/ ) {
+					if ( status === 'success' ) {
+						$this.html('<span style="color:green">Rolled back</span>');
+					} else {
+						$this.html('<span style="color:red">Rollback failed</span>');// MediaWiki:Rollbackfailed
+					}
 				}
-			}
-		);
-	}
+			);
+			/*jslint unparam: false*/
+		};
 	if ( $rollbackLinks.length > 0 ) {
 		rollbackSummaryDefault = 'Foram revertidas as edições de $user';
 		prevUser = $('#mw-diff-otitle2').find('a').first().text();
@@ -43,21 +51,23 @@ function ajaxRollback() {
 				.text('+sum')
 				.attr( 'class', '')
 				.click(function confirmRollback( e ) {
-					var	url = this.href,
+					var extraSum,
+						url = this.href,
 						user = url.match( /[?&]from=([^&]*)/ );
 					e.preventDefault();
 					if ( !user ) {
 						return;
 					}
 					user = decodeURIComponent( user[1].replace(/\+/g, ' ') );
-					var extraSum = prompt(
+					extraSum = prompt(
 						'Informe mais detalhes sobre o motivo desta reversão.\n\n' +
 						'Deixe em branco para utilizar o padrão.' +
 						' $user será trocado por "' + user + '".'
 					);
 					if (extraSum === null){
 						return;
-					} else if (extraSum === ''){
+					}
+					if (extraSum === ''){
 						useAJAX.call(this, e);
 					}
 					this.href += "&summary=" + encodeURIComponent(
@@ -71,3 +81,5 @@ function ajaxRollback() {
 	}
 }
 $(ajaxRollback);
+
+}( jQuery ) );
