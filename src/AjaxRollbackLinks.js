@@ -30,6 +30,7 @@ function ajaxRollback() {
 				function( data, status/*, request*/ ) {
 					if ( status === 'success' ) {
 						$this.html('<span style="color:green">Rolled back</span>');
+						$( '.patrollink' ).remove()
 					} else {
 						$this.html('<span style="color:red">Rollback failed</span>');// MediaWiki:Rollbackfailed
 					}
