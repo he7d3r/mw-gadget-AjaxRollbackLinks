@@ -72,7 +72,7 @@ function ajaxRollback() {
 						useAJAX.call(this, e);
 					}
 					this.href += "&summary=" + encodeURIComponent(
-						(rollbackSummaryDefault + ' ' + extraSum).replace( /\$user/g, user )
+						(rollbackSummaryDefault + ' ' + extraSum.charAt(0).toUpperCase() + extraSum.slice(1)).replace( /\$user/g, user )
 					);
 					useAJAX.call(this, e);
 				} )
