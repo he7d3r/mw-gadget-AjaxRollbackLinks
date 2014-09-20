@@ -6,7 +6,6 @@
  * @author: Helder (https://github.com/he7d3r)
  * @license: CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0/>
  * @source: Based on [[meta:User:Krinkle/Scripts/AjaxPatrolLinks.js]] and [[w:en:User:Gracenotes/rollback.js]]
- * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AjaxRollbackLinks.js]] ([[File:User:Helder.wiki/Tools/AjaxRollbackLinks.js]])
  * FIXME: Use MediaWiki API
  */
 /*jslint browser: true, white: true, devel: true, regexp: true */
