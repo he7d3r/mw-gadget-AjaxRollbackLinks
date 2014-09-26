@@ -8,8 +8,6 @@
  * @source: Based on [[meta:User:Krinkle/Scripts/AjaxPatrolLinks.js]] and [[w:en:User:Gracenotes/rollback.js]]
  * FIXME: Use MediaWiki API
  */
-/*jslint browser: true, white: true, devel: true, regexp: true */
-/*global mediaWiki, jQuery, injectSpinner */
 ( function ( $ ) {
 'use strict';
 
@@ -23,20 +21,20 @@ function ajaxRollback() {
 				href = $this.attr( 'href' ) + '&bot=1';
 			$this.text('Rolling back...');
 			$rollbackLinks = $this.parent();
-			/*jslint unparam: true*/
 			$.get(
 				href,
 				null,
+				/*jshint unused:false */
 				function( data, status/*, request*/ ) {
 					if ( status === 'success' ) {
 						$this.html('<span style="color:green">Rolled back</span>');
-						$( '.patrollink' ).remove()
+						$( '.patrollink' ).remove();
 					} else {
 						$this.html('<span style="color:red">Rollback failed</span>');// MediaWiki:Rollbackfailed
 					}
 				}
+				/*jshint unused:true */
 			);
-			/*jslint unparam: false*/
 		};
 	if ( $rollbackLinks.length > 0 ) {
 		rollbackSummaryDefault = 'Foram revertidas as edições de $user';
