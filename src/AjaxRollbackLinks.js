@@ -2,10 +2,10 @@
  * Makes [rollback] links for edits excecute without an additional page load. Including self-closing bookmarklet option.
  * @see: [[bugzilla:31270]]
  * @author: [[w:en:User:Gracenotes]]
- * @author: [[meta:User:Krinkle]]
+ * @author: [[m:User:Krinkle]]
  * @author: Helder (https://github.com/he7d3r)
  * @license: CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0/>
- * @source: Based on [[meta:User:Krinkle/Scripts/AjaxPatrolLinks.js]] and [[w:en:User:Gracenotes/rollback.js]]
+ * @source: Based on [[m:User:Krinkle/Scripts/AjaxPatrolLinks.js]] and [[w:en:User:Gracenotes/rollback.js]]
  * FIXME: Use MediaWiki API
  */
 ( function ( $ ) {
