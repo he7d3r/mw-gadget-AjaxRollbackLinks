@@ -1,6 +1,6 @@
 /**
  * Makes [rollback] links for edits excecute without an additional page load. Including self-closing bookmarklet option.
- * @see: [[bugzilla:31270]]
+ * @see: [[phab:T33270]]
  * @author: [[w:en:User:Gracenotes]]
  * @author: [[m:User:Krinkle]]
  * @author: Helder (https://github.com/he7d3r)
