@@ -28,10 +28,14 @@
 					/*jshint unused:false */
 					function ( data, status/*, request*/ ) {
 						if ( status === 'success' ) {
-							$this.html( '<span style="color:green">Rolled back</span>' );
+							$this.text( 'Rolled back' )
+								.css( 'color', 'green' )
+								.attr( 'href', mw.util.getUrl( null, { diff: 0 } ) )
+								.off( 'click', useAJAX );
 							$( '.patrollink' ).remove();
 						} else {
-							$this.html( '<span style="color:red">Rollback failed</span>' );// MediaWiki:Rollbackfailed
+							// MediaWiki:Rollbackfailed
+							$this.html( '<span style="color:red">Rollback failed</span>' );
 						}
 					}
 					/*jshint unused:true */
@@ -81,6 +85,9 @@
 			} );
 		}
 	}
-	$( ajaxRollback );
+	$.when(
+		mw.loader.using( 'mediawiki.util' ),
+		$.ready
+	).then( ajaxRollback );
 
 }( jQuery ) );
