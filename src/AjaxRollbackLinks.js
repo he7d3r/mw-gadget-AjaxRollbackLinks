@@ -1,5 +1,6 @@
 /**
  * Makes [rollback] links for edits excecute without an additional page load. Including self-closing bookmarklet option.
+ *
  * @see: [[phab:T33270]]
  * @author: [[w:en:User:Gracenotes]]
  * @author: [[m:User:Krinkle]]
@@ -12,14 +13,14 @@
 	'use strict';
 
 	function ajaxRollback() {
-		var	$rollbackLinks = $('.mw-rollback-link a'),
+		var	$rollbackLinks = $( '.mw-rollback-link a' ),
 			prevUser,
 			rollbackSummaryDefault,
-			useAJAX = function (e) {
+			useAJAX = function ( e ) {
 				e.preventDefault();
-				var $this = $(this),
+				var $this = $( this ),
 					href = $this.attr( 'href' ) + '&bot=1';
-				$this.text('Rolling back...');
+				$this.text( 'Rolling back...' );
 				$rollbackLinks = $this.parent();
 				$.get(
 					href,
@@ -27,10 +28,10 @@
 					/*jshint unused:false */
 					function ( data, status/*, request*/ ) {
 						if ( status === 'success' ) {
-							$this.html('<span style="color:green">Rolled back</span>');
+							$this.html( '<span style="color:green">Rolled back</span>' );
 							$( '.patrollink' ).remove();
 						} else {
-							$this.html('<span style="color:red">Rollback failed</span>');// MediaWiki:Rollbackfailed
+							$this.html( '<span style="color:red">Rollback failed</span>' );// MediaWiki:Rollbackfailed
 						}
 					}
 					/*jshint unused:true */
@@ -38,18 +39,18 @@
 			};
 		if ( $rollbackLinks.length > 0 ) {
 			rollbackSummaryDefault = 'Foram revertidas as edições de $user';
-			prevUser = $('#mw-diff-otitle2').find('a').first().text();
+			prevUser = $( '#mw-diff-otitle2' ).find( 'a' ).first().text();
 			if ( prevUser ) {
 				rollbackSummaryDefault += ', com o conteúdo passando a estar como na última edição de ' + prevUser;
 			}
 			rollbackSummaryDefault += '.';
-			$rollbackLinks.each(function () {
-				var $this = $(this);
+			$rollbackLinks.each( function () {
+				var $this = $( this );
 				$this.after(
 					$this.clone()
-					.text('+sum')
-					.attr( 'class', '')
-					.click(function confirmRollback( e ) {
+					.text( '+sum' )
+					.attr( 'class', '' )
+					.click( function confirmRollback( e ) {
 						var extraSum,
 							url = this.href,
 							user = url.match( /[?&]from=([^&]*)/ );
@@ -57,28 +58,29 @@
 						if ( !user ) {
 							return;
 						}
-						user = decodeURIComponent( user[1].replace(/\+/g, ' ') );
+						user = decodeURIComponent( user[ 1 ].replace( /\+/g, ' ' ) );
 						extraSum = prompt(
 							'Informe mais detalhes sobre o motivo desta reversão.\n\n' +
 							'Deixe em branco para utilizar o padrão.' +
 							' $user será trocado por "' + user + '".'
 						);
-						if (extraSum === null) {
+						if ( extraSum === null ) {
 							return;
 						}
-						if (extraSum === '') {
-							useAJAX.call(this, e);
+						if ( extraSum === '' ) {
+							useAJAX.call( this, e );
 						}
 						this.href += '&summary=' + encodeURIComponent(
-							(rollbackSummaryDefault + ' ' + extraSum.charAt(0).toUpperCase() + extraSum.slice(1)).replace( /\$user/g, user )
+							( rollbackSummaryDefault + ' ' + extraSum.charAt( 0 ).toUpperCase() + extraSum.slice( 1 ) )
+							.replace( /\$user/g, user )
 						);
-						useAJAX.call(this, e);
+						useAJAX.call( this, e );
 					} )
 				).after( ' | ' )
 				.click( useAJAX );
-			});
+			} );
 		}
 	}
-	$(ajaxRollback);
+	$( ajaxRollback );
 
 }( jQuery ) );
